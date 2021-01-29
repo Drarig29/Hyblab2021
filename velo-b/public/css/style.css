@@ -243,3 +243,19 @@ dessus de l'apect ratio 16/9 */
         font-size: 16vh;
     }
 }
+
+.replayboutonflex{
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+  /*  align-items: center;*/
+    width:100%;
+    justify-items: center;
+}
+
+
+.replaybouton{
+    display: flex;
+    /*  align-items: center;*/
+    justify-content: center;
+}
