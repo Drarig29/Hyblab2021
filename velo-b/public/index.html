@@ -114,19 +114,14 @@
 
             <!--choix transport 3 : bicloo -->
 
-                <section data-slidr="choix-transport-3" hidden>
-                    <img class="background-index bottom-0 left-0 w-screen place-self-start absolute" src="assets/backgrounds/backgroundBicloo.svg"></img>
-                    <header>
-
-                        <div class="flex justify-center my-5 choisis_ton_moyen_de_transport">
-                            <p> Choisis ton moyen de transport</p>
-                            <!--
-                            <img src="assets/choix/indicationchoix.svg"
-                                 alt="Indication choix transport"></img> -->
-                        </div>
-
-
-                    </header>
+            <section data-slidr="choix-transport-3" hidden>
+                <img class="background-index bottom-0 left-0 w-screen place-self-start absolute" src="assets/backgrounds/backgroundBicloo.svg"></img>
+                <header>
+                    <div class="flex justify-center my-5 choisis_ton_moyen_de_transport">
+                        <img src="assets/choix/indicationchoix.svg"
+                            alt="Indication choix transport"></img>
+                    </div>
+                </header>
 
                     <div class="flex flex-row justify-between items-center my-20">
                         <img src="assets/choix/flecheG.svg" id="fleche-gauche-bycl" alt="Fleche Gauche"></img>
@@ -241,13 +236,18 @@
 
 
             <!-- Pages d'information sur le vélo-->
-            <section data-slidr="info-choix-velo" hidden>
+            <section data-slidr="info-choix-velo" class="info-page" hidden>
                 <div>
-                    <div class="flex justify-center">
-                        <div class="fancy-title rounded-full">Infos vélos</div>
-                        <img id="close-btn-velo" class="place-self-end" src="assets\closeBtn.svg"></img>
+                    <div>
+                        <div class="flex justify-center my-5 info_title">
+                            <p> Info vélo</p>
+                        </div>
+                        <div  class="close-button" >
+                            <img id="close-btn-velo" src="assets\closeBtn.svg"></img>
+                        </div>
                     </div>
-                    <div class="flex justify-center infoVehicule">
+
+              <div class="flex justify-center infoVehicule">
                         <div>
                             <p><span class="orange-highlight">BiclooPark c’est quoi ?</span> C’est un service de
                                 stationnement
@@ -257,19 +257,24 @@
                                 territoire
                                 nantais</p>
                         </div>
-                    </div>
                 </div>
-                <img class="background-index bottom-0 left-0 w-screen place-self-start absolute"
+                <div class="info-illu">
+                <img class="background-index absolute "
                     src="assets\infosVehicules\infoVelo.svg"></img>
-
+                </div>
             </section>
 
             <!-- Pages d'information sur la voiture-->
-            <section class="relative" data-slidr="info-choix-voiture" hidden>
+            <!-- Pages d'information sur le vélo-->
+            <section data-slidr="info-choix-voiture" class="info-page" hidden>
                 <div>
-                    <div class="flex justify-center">
-                        <div class="fancy-title rounded-full">Infos voiture</div>
-                        <img id="close-btn-voiture" class="place-self-end" src="assets\closeBtn.svg"></img>
+                    <div>
+                        <div class="flex justify-center my-5 info_title">
+                            <p> Info vélo</p>
+                        </div>
+                        <div  class="close-button" >
+                            <img id="close-btn-voiture" src="assets\closeBtn.svg"></img>
+                        </div>
                     </div>
                     <div class="flex justify-center infoVehicule">
                         <div>
@@ -280,17 +285,22 @@
                         </div>
                     </div>
                 </div>
-
-                <img class="background-index bottom-0 left-0 w-screen place-self-start absolute"
+                <div class="info-illu">
+                    <img class="background-index absolute "
                     src="assets\infosVehicules\infoVoiture.svg"></img>
+                </div>
             </section>
 
             <!-- Pages d'information sur le bicloo-->
-            <section data-slidr="info-choix-bicloo" hidden>
+            <section data-slidr="info-choix-bicloo" class="info-page" hidden>
                 <div>
-                    <div class="flex justify-center">
-                        <div class="fancy-title rounded-full">Infos bicloo</div>
-                        <img id="close-btn-bicloo" class="place-self-end" src="assets\closeBtn.svg"></img>
+                    <div>
+                        <div class="flex justify-center my-5 info_title">
+                            <p> Info Bicloo </p>
+                        </div>
+                        <div  class="close-button" >
+                            <img id="close-btn-bicloo" src="assets\closeBtn.svg"></img>
+                        </div>
                     </div>
                     <div class="flex justify-center infoVehicule">
                         <div>
@@ -306,19 +316,26 @@
                                 et
                                 institutions, pour promouvoir l’utilisation du vélo auprès des collaboateurs</p>
                         </div>
+
                     </div>
                 </div>
-                <img class="background-index bottom-0 left-0 w-screen place-self-start absolute"
+                <div  class="info-illu">
+                    <img class="background-index place-self-start absolute "
                     src="assets\infosVehicules\infoBicloo.svg"></img>
+                </div>
             </section>
 
             <!-- Pages d'information sur les transports en commun -->
-            <section data-slidr="info-choix-transports" hidden>
+            <!-- Pages d'information sur le vélo-->
+            <section data-slidr="info-choix-transports" class="info-page" hidden>
                 <div>
-
-                    <div class="flex justify-center">
-                        <div class="fancy-title rounded-full">Infos tramway</div>
-                        <img id="close-btn-transports" class="place-self-end" src="assets\closeBtn.svg"></img>
+                    <div>
+                        <div class="flex justify-center my-5 info_title">
+                            <p> Info vélo</p>
+                        </div>
+                        <div  class="close-button" >
+                            <img id="close-btn-transports" src="assets\closeBtn.svg"></img>
+                        </div>
                     </div>
                     <div class="flex justify-center infoVehicule">
                         <div>
@@ -328,10 +345,13 @@
                             <p><span class="orange-highlight">3 lignes de tramway</span> déservent Nantes et son
                                 agglomération et se croisent en plein cœur du centre-ville</p>
                         </div>
+
                     </div>
                 </div>
-                <img class="background-index bottom-0 left-0 w-screen place-self-start absolute"
+                <div class="info-illu">
+                    <img class="background-index absolute "
                 src="assets\infosVehicules\infoTransport.svg"></img>
+                </div>
             </section>
 
             <section data-slidr="page-finale" hidden>
