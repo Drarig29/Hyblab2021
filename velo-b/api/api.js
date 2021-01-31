@@ -18,7 +18,7 @@ const API_NANTES_ROUTES = {
     places_parking: "https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_parkings-publics-nantes-disponibilites&q=&lang=fr&facet=grp_nom&facet=grp_statut&rows=-1",
 }
 
-const QUARTIERS = ["nord","sud","est","ouest","centre", undefined]
+const QUARTIERS = ["nord","sud","est","ouest","centre", "all"]
 
 function loadJSONFile(file_name){
     let rawdata = fs.readFileSync(`./velo-b/api/data/${file_name}`);
@@ -34,18 +34,18 @@ module.exports = () => {
 
     // routes depuis les fichiers json
     app.get('/quartiers/:quartier', JsonRoute((req) => getLocalJSONData('quartiers.json', req.params['quartier'])));
-    app.get('/abris-velo/:quartier?', JsonRoute((req) => getLocalJSONData('abris-velo.json', req.params['quartier'])));
-    app.get('/amenagements-cyclables/:quartier?', JsonRoute((req) => getLocalJSONData('amenagements-cyclables.json', req.params['quartier'])));
-    app.get('/gonfleurs-libre-service/:quartier?', JsonRoute((req) => getLocalJSONData('gonfleurs-libre-service.json', req.params['quartier'])));
-    app.get('/stations-velo-libre-service/:quartier?', JsonRoute((req) => getLocalJSONData('stations-velo-libre-service.json', req.params['quartier'])));
-    app.get('/arrets-tan/:quartier?', JsonRoute((req) => getLocalJSONData('arrets-tan.json', req.params['quartier'])));
-    app.get('/velocistes/:quartier?', JsonRoute((req) => getLocalJSONData('velocistes.json', req.params['quartier'])));
+    app.get('/abris-velo/:quartier', JsonRoute((req) => getLocalJSONData('abris-velo.json', req.params['quartier'])));
+    app.get('/amenagements-cyclables/:quartier', JsonRoute((req) => getLocalJSONData('amenagements-cyclables.json', req.params['quartier'])));
+    app.get('/gonfleurs-libre-service/:quartier', JsonRoute((req) => getLocalJSONData('gonfleurs-libre-service.json', req.params['quartier'])));
+    app.get('/stations-velo-libre-service/:quartier', JsonRoute((req) => getLocalJSONData('stations-velo-libre-service.json', req.params['quartier'])));
+    app.get('/arrets-tan/:quartier', JsonRoute((req) => getLocalJSONData('arrets-tan.json', req.params['quartier'])));
+    app.get('/velocistes/:quartier', JsonRoute((req) => getLocalJSONData('velocistes.json', req.params['quartier'])));
     app.get('/services-velos-bicloo/', JsonRoute(() => getLocalJSONData('tarifs-bicloo.json')));
 
     // routes depuis l'api de nantes metropole
-    app.get('/disponibilites-parcs-relais/:quartier?', JsonRoute((req) => fetchData(API_NANTES_ROUTES.parcs_relais, req.params['quartier'])));
-    app.get('/disponibilites-places-parking/:quartier?', JsonRoute((req) => fetchData(API_NANTES_ROUTES.places_parking, req.params['quartier'])));
-    app.get('/disponibilites-bicloo/:quartier?', JsonRoute((req) => fetchData(API_NANTES_ROUTES.disponibilites_bicloo, req.params['quartier'])));
+    app.get('/disponibilites-parcs-relais/:quartier', JsonRoute((req) => fetchData(API_NANTES_ROUTES.parcs_relais, req.params['quartier'])));
+    app.get('/disponibilites-places-parking/:quartier', JsonRoute((req) => fetchData(API_NANTES_ROUTES.places_parking, req.params['quartier'])));
+    app.get('/disponibilites-bicloo/:quartier', JsonRoute((req) => fetchData(API_NANTES_ROUTES.disponibilites_bicloo, req.params['quartier'])));
 
     app.get('/update/', (req,res) => update(req, res));
 
@@ -53,7 +53,7 @@ module.exports = () => {
         res.status(404).send(JSON.stringify({error:{message:'Point d\'entrée inexistant.', code:404}}))
     });
 
-    function getLocalJSONData(file_name, quartier=undefined){
+    function getLocalJSONData(file_name, quartier){
         if(!QUARTIERS.includes(quartier)){
             throw {message:"Quartier invalide", code:400};
         }
@@ -64,7 +64,11 @@ module.exports = () => {
             // Faire appel à la route update si ce message apparait
             throw {message:"Données indisponnibles", code:503, error_content:e};
         }
-        return quartier?data[quartier]:(Array.isArray(data)?data:Object.values(data).flat());
+        if(quartier === "all"){
+            return Array.isArray(data)?data:Object.values(data).reduce((acc, val) => acc.concat(val), []);
+        }else{
+            return data[quartier]
+        }
     }
 
     // utilitaire pour créer une route qui envoie du json
@@ -139,8 +143,10 @@ module.exports = () => {
                 throw {message:"Quartier invalide", code:400};
             }
             const quartiers = loadJSONFile('quartiers.json');
-            const polygon_api = quartiers[quartier].reduce((acc, val) => acc + `(${val[0]}%2C${val[1]})%2C`, '').slice(0, -3);
-            url += '&geofilter.polygon=' + polygon_api;
+            if(quartier !== "all") {
+                const polygon_api = quartiers[quartier].reduce((acc, val) => acc + `(${val[0]}%2C${val[1]})%2C`, '').slice(0, -3);
+                url += '&geofilter.polygon=' + polygon_api;
+            }
         }
         let response;
         try{
